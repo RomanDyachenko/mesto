@@ -1,0 +1,9 @@
+.cards__like-img{
+    width: 22px;
+    height: 19px;
+    align-self: center;
+}
+.cards__like-img:hover{
+    cursor: pointer;
+    opacity: 0.6;
+}

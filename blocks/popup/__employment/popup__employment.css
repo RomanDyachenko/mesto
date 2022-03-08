@@ -1,0 +1,20 @@
+.popup__employment{
+    font-family: "Inter", "Arial", "Helvetica", sans-serif;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 14px;
+    line-height: 1.21;
+    color: #000000;
+    margin: 0 auto 48px;
+    width: 358px;
+    border-style: none;
+    border-bottom: 1px solid rgb(0, 0, 0, 0.2);
+    outline-style: none;
+    padding: 0 0 13px;
+}
+@media (max-width: 320px){
+    .popup__employment{
+        width: 238px;
+        margin-bottom: 45px;
+    }
+}
