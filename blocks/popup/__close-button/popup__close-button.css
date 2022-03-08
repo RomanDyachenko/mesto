@@ -7,7 +7,7 @@
     cursor: pointer;
     opacity: 0.6;
 }
-@media (max-width: 320px){
+@media (max-width: 400px){
     .popup__close-button{
         width: 20px;
         height: 20px;
