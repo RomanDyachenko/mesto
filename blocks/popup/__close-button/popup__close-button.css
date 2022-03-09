@@ -8,7 +8,7 @@
     background-repeat: no-repeat;
     width: 32px;
     height: 32px;
-    background-size: contain
+    background-size: contain;
 }
 .popup__close-button:hover{
     cursor: pointer;
