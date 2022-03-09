@@ -7,6 +7,10 @@
     line-height: 1.14;
     color: #FFFFFF;
     margin: 0;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    max-width: 350px;
 }
 
 @media (max-width: 530px){

@@ -1,9 +1,15 @@
 .profile__add-button{
+    padding: 0;
     display: flex;
-    width: 146px;
+    min-width: 146px;
     height: 46px;
-    border: 2px solid #FFFFFF;
+    border: 2px solid #fff;
     border-radius: 2px;
+    background: unset;
+    background-image: url(../../../images/plus.svg);
+    background-size: 22px;
+    background-repeat: no-repeat;
+    background-position: center;
     align-self: center;
     align-items: center;
     justify-content: center;
@@ -16,5 +22,6 @@
     .profile__add-button{
         width: 278px;
         margin-top: 36px;
+        background-size: 16px;
     }
 }
