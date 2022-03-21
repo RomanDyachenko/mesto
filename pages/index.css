@@ -3,6 +3,7 @@
 @import url(../blocks/root/root.css);
 @import url(../blocks/page/page.css);
 @import url(../blocks/cards/cards.css);
+@import url(../blocks/cards/__delete-button/cards__delete-button.css);
 @import url(../blocks/cards/__like-button/cards__like-button.css);
 @import url(../blocks/cards/__name-container/cards__name-container.css);
 @import url(../blocks/cards/__name/cards__name.css);

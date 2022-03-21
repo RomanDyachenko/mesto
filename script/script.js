@@ -86,7 +86,10 @@ function addNewCard(item) {
     let templateImg = templateElement.querySelector('.cards__place-img');
     templateName.textContent = item.name;
     templateImg.src = item.link;
+    setDeleteButtonListeners(templateElement);
     sectionCards.append(templateElement);
+    
+
 }
 
 initialCards.map(addNewCard);
@@ -97,6 +100,7 @@ let popupAddLink = popupAdd.querySelector('.popup__employment');
 let buttonAdd = document.querySelector('.profile__add-button');
 let buttonAddClose = popupAdd.querySelector('.popup__close-button');
 let popupAddForm = popupAdd.querySelector('.popup__form');
+
 
 buttonAdd.addEventListener('click', () => {
     popupAdd.classList.add('popup_opened');
@@ -120,3 +124,15 @@ popupAddForm.addEventListener('submit', (evt) => {
     evt.currentTarget.reset();
 }
 })
+
+let buttonDelete = document.querySelector('.cards__delete-button');
+
+function removeCard(event){
+    const todo = event.currentTarget.closest('.cards__place');
+
+    todo.remove();
+}
+
+function setDeleteButtonListeners(item){
+    item.querySelector('.cards__delete-button').addEventListener('click', removeCard);
+}
