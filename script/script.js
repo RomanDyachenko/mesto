@@ -1,10 +1,11 @@
 let buttonEdit = document.querySelector('.profile__edit-button');
-let popUp = document.querySelector('.popup');
-let buttonClose = popUp.querySelector('.popup__close-button');
+let popupEdit = document.querySelector('#popup-edit');
+let buttonClose = popupEdit.querySelector('.popup__close-button');
 let profileName = document.querySelector('.profile__name');
-let popupName = popUp.querySelector('.popup__name');
+let popupName = popupEdit.querySelector('.popup__name');
 let profileEmployment = document.querySelector('.profile__employment');
-let popupEmployment = popUp.querySelector('.popup__employment');
+let popupEmployment = popupEdit.querySelector('.popup__employment');
+
 
 // Добавление исходного текста в поля попапа
 
@@ -15,20 +16,20 @@ popupEmployment.value = profileEmployment.textContent;
 // Закрытие/открытие попапа
 
 function popupOpened (){
-    popUp.classList.add('popup_opened');
+    popupEdit.classList.add('popup_opened');
 };
 
 buttonEdit.addEventListener('click', popupOpened);
 
 function popupClosed (){
-    popUp.classList.remove('popup_opened');
+    popupEdit.classList.remove('popup_opened');
 };
 
 buttonClose.addEventListener('click', popupClosed);
 
 // Находим форму в DOM
 
-let popupForm = popUp.querySelector('.popup__container')
+let popupForm = popupEdit.querySelector('.popup__container')
 
 // Обработчик «отправки» формы, хотя пока
 // она никуда отправляться не будет
@@ -42,7 +43,7 @@ function formSubmitHandler (evt) {
     profileEmployment.textContent = popupEmployment.value;
 
     // Вставьте новые значения с помощью textContent
-    popUp.classList.remove('popup_opened');
+    popupEdit.classList.remove('popup_opened');
 };
 
 // Прикрепляем обработчик к форме:
@@ -79,11 +80,43 @@ const initialCards = [
 
 const sectionCards = document.querySelector('.cards');
 
-initialCards.map((item) => {
+function addNewCard(item) {
     let templateElement = document.querySelector('#template').content.firstElementChild.cloneNode(true);
     let templateName = templateElement.querySelector('.cards__name');
     let templateImg = templateElement.querySelector('.cards__place-img');
     templateName.textContent = item.name;
     templateImg.src = item.link;
     sectionCards.append(templateElement);
+}
+
+initialCards.map(addNewCard);
+
+let popupAdd = document.querySelector('#popup-add');
+let popupAddName = popupAdd.querySelector('.popup__name');
+let popupAddLink = popupAdd.querySelector('.popup__employment');
+let buttonAdd = document.querySelector('.profile__add-button');
+let buttonAddClose = popupAdd.querySelector('.popup__close-button');
+let popupAddForm = popupAdd.querySelector('.popup__form');
+
+buttonAdd.addEventListener('click', () => {
+    popupAdd.classList.add('popup_opened');
+})
+buttonAddClose.addEventListener('click', (evt) => {
+    popupAdd.classList.remove('popup_opened');
+    popupAddForm.reset();
+})
+
+popupAddForm.addEventListener('submit', (evt) => {
+    evt.preventDefault();
+    if (!(Boolean(popupAddName.value) === false) && !(Boolean(popupAddLink.value) === false)){
+        let newCard = {
+        name: popupAddName.value,
+        link: popupAddLink.value
+    };
+    addNewCard(newCard);
+
+    popupAdd.classList.remove('popup_opened');
+    
+    evt.currentTarget.reset();
+}
 })

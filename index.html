@@ -34,7 +34,7 @@
             </p>
         </footer>
     </div>
-    <div class="popup">
+    <div class="popup" id="popup-edit">
         <div class="popup__container">
             <button type="button" class="popup__close-button"></button>
             <h2 class="popup__title">Редактировать профиль</h2>
@@ -42,6 +42,17 @@
                 <input class="popup__name" type="text">
                 <input class="popup__employment" type="text">
                 <button class="popup__submit" type="submit">Сохранить</button>
+            </form>
+        </div>
+    </div>
+    <div class="popup" id="popup-add">
+        <div class="popup__container">
+            <button type="button" class="popup__close-button"></button>
+            <h2 class="popup__title">Новое место</h2>
+            <form class="popup__form">
+                <input class="popup__name" type="text" placeholder="Название">
+                <input class="popup__employment" type="text" placeholder="Ссылка на картинку">
+                <button class="popup__submit" type="submit">Создать</button>
             </form>
         </div>
     </div>
