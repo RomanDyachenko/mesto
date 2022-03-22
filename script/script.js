@@ -80,17 +80,19 @@ const initialCards = [
 
 const sectionCards = document.querySelector('.cards');
 
+
 function addNewCard(item) {
-    let templateElement = document.querySelector('#template').content.firstElementChild.cloneNode(true);
+    let templateElement = document.querySelector('#template').content.firstElementChild.cloneNode(true);;
     let templateName = templateElement.querySelector('.cards__name');
     let templateImg = templateElement.querySelector('.cards__place-img');
     templateName.textContent = item.name;
     templateImg.src = item.link;
     setDeleteButtonListeners(templateElement);
+    popupFullSizeOpen(templateImg);
+    popupSetNameListener(templateElement);
     sectionCards.append(templateElement);
-    
-
 }
+
 
 initialCards.map(addNewCard);
 
@@ -105,7 +107,7 @@ let popupAddForm = popupAdd.querySelector('.popup__form');
 buttonAdd.addEventListener('click', () => {
     popupAdd.classList.add('popup_opened');
 })
-buttonAddClose.addEventListener('click', (evt) => {
+buttonAddClose.addEventListener('click', () => {
     popupAdd.classList.remove('popup_opened');
     popupAddForm.reset();
 })
@@ -136,3 +138,29 @@ function removeCard(event){
 function setDeleteButtonListeners(item){
     item.querySelector('.cards__delete-button').addEventListener('click', removeCard);
 }
+
+let popupFullSize = document.querySelector('#popup-full-size');
+let popupFullSizeImg = popupFullSize.querySelector('.popup__image');
+let popupPlaceName = document.querySelector('.popup__place-name');
+
+function popupFullSizeOpen(item) {
+    item.addEventListener('click', popupSetImage);
+}
+function popupSetImage(evt){
+    popupFullSize.classList.add('popup_opened');
+    popupFullSizeImg.src = evt.currentTarget.src;
+}
+function popupSetName(evt){
+    popupPlaceName.textContent = evt.currentTarget.querySelector('.cards__name').textContent;
+}
+function popupSetNameListener(item){
+    item.addEventListener('click', popupSetName);
+}
+function closeFullSizePopup(evt){
+    const todo = evt.currentTarget.closest('.popup');
+    todo.classList.remove('popup_opened');
+}
+function setCloseFullSizePopup(item){
+    item.querySelector('.popup__close-button').addEventListener('click', closeFullSizePopup);
+}
+setCloseFullSizePopup(popupFullSize);
