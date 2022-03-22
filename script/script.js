@@ -82,14 +82,17 @@ const sectionCards = document.querySelector('.cards');
 
 
 function addNewCard(item) {
-    let templateElement = document.querySelector('#template').content.firstElementChild.cloneNode(true);;
+    let templateElement = document.querySelector('#template').content.firstElementChild.cloneNode(true);
+    let templateButton =templateElement.querySelector('.cards__like-button')
     let templateName = templateElement.querySelector('.cards__name');
     let templateImg = templateElement.querySelector('.cards__place-img');
     templateName.textContent = item.name;
     templateImg.src = item.link;
+    templateImg.alt = item.name;
     setDeleteButtonListeners(templateElement);
     popupFullSizeOpen(templateImg);
     popupSetNameListener(templateElement);
+    buttonLikeListener(templateButton);
     sectionCards.append(templateElement);
 }
 
@@ -164,3 +167,14 @@ function setCloseFullSizePopup(item){
     item.querySelector('.popup__close-button').addEventListener('click', closeFullSizePopup);
 }
 setCloseFullSizePopup(popupFullSize);
+
+let likeButton = templateElement.querySelector('.cards__like-button');
+
+function addLikeButtonActive(event){
+    event.currentTarget.classList.toggle('cards__like-button_active');
+}
+
+function buttonLikeListener(item){
+    item.addEventListener('click', addLikeButtonActive);
+}
+
