@@ -168,8 +168,6 @@ function setCloseFullSizePopup(item){
 }
 setCloseFullSizePopup(popupFullSize);
 
-let likeButton = templateElement.querySelector('.cards__like-button');
-
 function addLikeButtonActive(event){
     event.currentTarget.classList.toggle('cards__like-button_active');
 }
