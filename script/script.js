@@ -17,8 +17,8 @@ function closePopup (popup){
 
 function setListenerEditOpen(){
     popupEditName.value = profileName.textContent;
-    popupEmployment.value = profileEmployment.textContent;
-    openPEditopup(popupEdit);
+    popupEditEmployment.value = profileEmployment.textContent;
+    openPopup(popupEdit);
 }
 function setListenerEditClose(){
     closePopup(popupEdit);
@@ -34,7 +34,7 @@ function handleProfileFormSubmit (evt) {
     evt.preventDefault(); 
 
     profileName.textContent = popupEditName.value;
-    profileEmployment.textContent = popupEmployment.valEditue;
+    profileEmployment.textContent = popupEditEmployment.value;
     popupEdit.classList.remove('popup_opened');
 };
 
