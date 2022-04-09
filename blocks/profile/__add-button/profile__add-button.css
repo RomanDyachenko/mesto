@@ -18,6 +18,10 @@
     cursor: pointer;
     opacity: 0.6;
 }
+.profile__add-button:active, .profile__add-button:focus {
+    outline: none !important;
+    }
+
 @media (max-width: 690px){
     .profile__add-button{
         width: 278px;

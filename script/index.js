@@ -2,27 +2,47 @@ const profileEditButton = document.querySelector('.profile__edit-button');
 const popupEdit = document.querySelector('#popup-edit');
 const popupEditCloseButton = popupEdit.querySelector('.popup__close-button');
 const profileName = document.querySelector('.profile__name');
-const popupEditName = popupEdit.querySelector('.popup__name');
+const popupEditName = popupEdit.querySelector('.popup__input_type_name');
 const profileEmployment = document.querySelector('.profile__employment');
-const popupEditEmployment = popupEdit.querySelector('.popup__employment');
-
+const popupEditEmployment = popupEdit.querySelector('.popup__input_type_employment');
 
 function openPopup (popup){
     popup.classList.add('popup_opened');
+    document.addEventListener('keydown', isEscapeKeydown);
+    popup.addEventListener('click', isOverlay);
 };
 
 function closePopup (popup){
     popup.classList.remove('popup_opened');
 };
 
+function isEscapeKeydown (evt){
+    if (evt.key === 'Escape'){
+        const currentPopup = document.querySelector('.popup_opened');
+        closePopup(currentPopup);
+    }
+}
+
+function isOverlay(evt){
+    if (evt.target === evt.currentTarget){
+        const currentPopup = document.querySelector('.popup_opened');
+        closePopup(currentPopup);
+    }
+}
+
 function openProfilePopup(){
-    popupEditName.value = profileName.textContent;
-    popupEditEmployment.value = profileEmployment.textContent;
     openPopup(popupEdit);
 }
 function closeProfilePopup(){
     closePopup(popupEdit);
 }
+
+function setProfilePopupValues (){
+    popupEditName.value = profileName.textContent;
+    popupEditEmployment.value = profileEmployment.textContent;
+}
+
+setProfilePopupValues();
 
 profileEditButton.addEventListener('click', openProfilePopup);
 
@@ -93,8 +113,8 @@ function addNewCard(item) {
 initialCards.map(addNewCard);
 
 const popupAdd = document.querySelector('#popup-add');
-const popupAddName = popupAdd.querySelector('.popup__name');
-const popupAddLink = popupAdd.querySelector('.popup__employment');
+const popupAddName = popupAdd.querySelector('.popup__input_type_name');
+const popupAddLink = popupAdd.querySelector('.popup__input_type_employment');
 const profileAddButton = document.querySelector('.profile__add-button');
 const popupAddCloseButton = popupAdd.querySelector('.popup__close-button');
 const popupAddForm = popupAdd.querySelector('.popup__form');
@@ -110,6 +130,7 @@ function closeCardPopup(){
 }
 
 popupAddCloseButton.addEventListener('click', closeCardPopup);
+
 
 popupAddForm.addEventListener('submit', (evt) => {
     evt.preventDefault();
