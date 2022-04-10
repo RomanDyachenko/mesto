@@ -22,7 +22,7 @@
     outline: none !important;
     }
 
-@media (max-width: 690px){
+@media (max-width: 750px){
     .profile__add-button{
         width: 278px;
         margin-top: 36px;

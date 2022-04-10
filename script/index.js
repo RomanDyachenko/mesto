@@ -7,7 +7,6 @@ const profileEmployment = document.querySelector('.profile__employment');
 const popupEditEmployment = popupEdit.querySelector('.popup__input_type_employment');
 
 function openPopup (popup){
-    setProfilePopupValues();
     popup.classList.add('popup_opened');
     document.addEventListener('keydown', isEscapeKeydown);
     popup.addEventListener('click', isOverlay);
@@ -16,6 +15,7 @@ function openPopup (popup){
 function closePopup (popup){
     popup.classList.remove('popup_opened');
     document.removeEventListener('keydown', isEscapeKeydown);
+    popup.removeEventListener('click', isOverlay);
 };
 
 function isEscapeKeydown (evt){
@@ -33,6 +33,15 @@ function isOverlay(evt){
 }
 
 function openProfilePopup(){
+    setProfilePopupValues();
+    enableValidation({
+        formSelector : '.popup__form',
+        inputSelector : '.popup__input',
+        submitButtonSelector : '.popup__submit',
+        inactiveButtonClass : 'popup__submit_disabled',
+        inputErrorClass : 'popup__input_type_error',
+        errorClass : 'popup__span-error_type_active'
+      });
     openPopup(popupEdit);
 }
 function closeProfilePopup(){
@@ -44,7 +53,6 @@ function setProfilePopupValues (){
     popupEditEmployment.value = profileEmployment.textContent;
 }
 
-setProfilePopupValues();
 
 profileEditButton.addEventListener('click', openProfilePopup);
 
@@ -122,9 +130,16 @@ const popupAddCloseButton = popupAdd.querySelector('.popup__close-button');
 const popupAddForm = popupAdd.querySelector('.popup__form');
 
 function openCardPopup() {
-    const popupAddSubmitButton = popupAdd.querySelector('.popup__submit');
     openPopup(popupAdd);
-    popupAddSubmitButton.classList.add('popup__submit_disabled')
+    enableValidation({
+        formSelector : '.popup__form',
+        inputSelector : '.popup__input',
+        submitButtonSelector : '.popup__submit',
+        inactiveButtonClass : 'popup__submit_disabled',
+        inputErrorClass : 'popup__input_type_error',
+        errorClass : 'popup__span-error_type_active'
+      });
+
 };
 
 profileAddButton.addEventListener('click', openCardPopup);
