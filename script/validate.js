@@ -1,26 +1,3 @@
-/*function enableValidation (item){
-    const form = document.forms[`form-${item}`];
-    
-    form.addEventListener('submit', handleFormSubmit);
-    form.addEventListener('input', handleFormInput);
-}
-
-function showInputError(){
-
-}
-
-function handleFormSubmit (evt){
-    evt.preventDefault();
-
-    const form = evt.currentTarget;
-    const isValid = form.checkValidity;
-
-
-}*/
-const popupForm = document.querySelector(".popup__form");
-const popupErrorMessage = document.querySelector('.popup__span-error');
-const popupInput = popupForm.querySelector('.popup__input');
-
 function showInputError (formElement, inputElement, errorMessage, obj){
     errorElement = formElement.querySelector(`#error-${inputElement.id}`);
     inputElement.classList.add(obj.inputErrorClass);

@@ -8,7 +8,13 @@
     line-height: 1.21;
     margin: 0;
     margin-left: 36px;
-    min-height: 12px;
+    min-height: 29px;
     max-width: 358px;
     visibility: hidden;
+}
+
+@media (max-width: 550px){
+    .popup__span-error{
+        margin-left: 22px;
+    }
 }

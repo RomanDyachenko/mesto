@@ -23,6 +23,7 @@
 @import url(../blocks/profile/__info-container/profile__info-container.css);
 @import url(../blocks/profile/__name/profile__name.css);
 @import url(../blocks/popup/popup.css);
+@import url(../blocks/popup/_type/popup_type_full-size.css);
 @import url(../blocks/popup/__close-button/popup__close-button.css);
 @import url(../blocks/popup/__container/popup__container.css);
 @import url(../blocks/popup/__container/_full-size/popup__container_full-size.css);

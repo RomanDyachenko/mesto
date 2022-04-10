@@ -7,6 +7,7 @@ const profileEmployment = document.querySelector('.profile__employment');
 const popupEditEmployment = popupEdit.querySelector('.popup__input_type_employment');
 
 function openPopup (popup){
+    setProfilePopupValues();
     popup.classList.add('popup_opened');
     document.addEventListener('keydown', isEscapeKeydown);
     popup.addEventListener('click', isOverlay);
@@ -14,6 +15,7 @@ function openPopup (popup){
 
 function closePopup (popup){
     popup.classList.remove('popup_opened');
+    document.removeEventListener('keydown', isEscapeKeydown);
 };
 
 function isEscapeKeydown (evt){
@@ -120,7 +122,9 @@ const popupAddCloseButton = popupAdd.querySelector('.popup__close-button');
 const popupAddForm = popupAdd.querySelector('.popup__form');
 
 function openCardPopup() {
+    const popupAddSubmitButton = popupAdd.querySelector('.popup__submit');
     openPopup(popupAdd);
+    popupAddSubmitButton.classList.add('popup__submit_disabled')
 };
 
 profileAddButton.addEventListener('click', openCardPopup);
@@ -134,17 +138,18 @@ popupAddCloseButton.addEventListener('click', closeCardPopup);
 
 popupAddForm.addEventListener('submit', (evt) => {
     evt.preventDefault();
-    if (!(Boolean(popupAddName.value) === false) && !(Boolean(popupAddLink.value) === false)){
-        const newCard = {
-        name: popupAddName.value,
-        link: popupAddLink.value
+    
+    const newCard = {
+    name: popupAddName.value,
+    link: popupAddLink.value
     };
+
     addNewCard(newCard);
 
     closePopup(popupAdd);
     
     evt.currentTarget.reset();
-}
+
 })
 
 
