@@ -20,7 +20,7 @@
     }
 }
 
-@media (max-width: 320px){
+@media (max-width: 350px){
     .profile__employment{
         font-size: 14px;
         line-height: 1.21;

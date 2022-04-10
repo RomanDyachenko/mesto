@@ -24,12 +24,20 @@ function checkInputValidity (inputElement, formElement, obj){
 function setEventListeners(formElement, obj){
     const inputList = Array.from(formElement.querySelectorAll(obj.inputSelector));
     const buttonElement = formElement.querySelector(obj.submitButtonSelector);
+    const buttonEdit = document.querySelector(obj.editButtonSelector);
+    const buttonAdd = document.querySelector(obj.addButtonSelector);
     inputList.forEach((inputElement) => {
-        toggleButtonState (inputList, buttonElement, obj);
+        buttonEdit.addEventListener('click', () => {
+            toggleButtonState (inputList, buttonElement, obj);
+        });
+        buttonAdd.addEventListener('click', () => {
+            toggleButtonState (inputList, buttonElement, obj);
+        });
         inputElement.addEventListener('input', () => {
             checkInputValidity(inputElement, formElement, obj);
             toggleButtonState (inputList, buttonElement, obj);
         });
+    
     });
 }
 function enableValidation (obj){
@@ -64,7 +72,9 @@ enableValidation({
     submitButtonSelector : '.popup__submit',
     inactiveButtonClass : 'popup__submit_disabled',
     inputErrorClass : 'popup__input_type_error',
-    errorClass : 'popup__span-error_type_active'
+    errorClass : 'popup__span-error_type_active',
+    editButtonSelector : '.profile__edit-button',
+    addButtonSelector : '.profile__add-button'
   });
 
 

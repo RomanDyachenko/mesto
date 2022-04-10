@@ -34,14 +34,6 @@ function isOverlay(evt){
 
 function openProfilePopup(){
     setProfilePopupValues();
-    enableValidation({
-        formSelector : '.popup__form',
-        inputSelector : '.popup__input',
-        submitButtonSelector : '.popup__submit',
-        inactiveButtonClass : 'popup__submit_disabled',
-        inputErrorClass : 'popup__input_type_error',
-        errorClass : 'popup__span-error_type_active'
-      });
     openPopup(popupEdit);
 }
 function closeProfilePopup(){
@@ -131,15 +123,14 @@ const popupAddForm = popupAdd.querySelector('.popup__form');
 
 function openCardPopup() {
     openPopup(popupAdd);
-    enableValidation({
+    /*enableValidation({
         formSelector : '.popup__form',
         inputSelector : '.popup__input',
         submitButtonSelector : '.popup__submit',
         inactiveButtonClass : 'popup__submit_disabled',
         inputErrorClass : 'popup__input_type_error',
         errorClass : 'popup__span-error_type_active'
-      });
-
+      });*/
 };
 
 profileAddButton.addEventListener('click', openCardPopup);
