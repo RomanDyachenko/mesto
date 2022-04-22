@@ -1,3 +1,6 @@
+import { Card } from "./Card.js";
+import { FormValidator } from "./FormValidator.js";
+
 const profileEditButton = document.querySelector('.profile__edit-button');
 const popupEdit = document.querySelector('#popup-edit');
 const popupEditCloseButton = popupEdit.querySelector('.popup__close-button');
@@ -5,6 +8,22 @@ const profileName = document.querySelector('.profile__name');
 const popupEditName = popupEdit.querySelector('.popup__input_type_name');
 const profileEmployment = document.querySelector('.profile__employment');
 const popupEditEmployment = popupEdit.querySelector('.popup__input_type_employment');
+
+const objectValidation = {
+    formSelector : '.popup__form',
+    inputSelector : '.popup__input',
+    submitButtonSelector : '.popup__submit',
+    inactiveButtonClass : 'popup__submit_disabled',
+    inputErrorClass : 'popup__input_type_error',
+    errorClass : 'popup__span-error_type_active',
+    editButtonSelector : '.profile__edit-button',
+    addButtonSelector : '.profile__add-button'
+  }
+
+  const newFormValidator = new FormValidator(objectValidation);
+
+  newFormValidator.enableValidation();
+
 
 function openPopup (popup){
     popup.classList.add('popup_opened');
@@ -90,29 +109,11 @@ const initialCards = [
   ];
 
 
-const sectionCards = document.querySelector('.cards');
 
-
-function createCard(item){
-    const templateElement = document.querySelector('#template').content.firstElementChild.cloneNode(true);
-    const templateButton = templateElement.querySelector('.cards__like-button')
-    const templateName = templateElement.querySelector('.cards__name');
-    const templateImg = templateElement.querySelector('.cards__place-img');
-    templateName.textContent = item.name;
-    templateImg.src = item.link;
-    templateImg.alt = item.name;
-    setDeleteButtonListener(templateElement);
-    setImageClickListener(templateImg);
-    setLikeButtonListener(templateButton);
-    return templateElement;
-}
-
-function addNewCard(item) {
-    const templateCard = createCard(item);
-    sectionCards.prepend(templateCard);
-}
-
-initialCards.map(addNewCard);
+initialCards.forEach((item)=>{
+    const elementCard = new Card (item);
+    return elementCard.addNewCard();
+});
 
 const popupAdd = document.querySelector('#popup-add');
 const popupAddName = popupAdd.querySelector('.popup__input_type_name');
@@ -123,14 +124,6 @@ const popupAddForm = popupAdd.querySelector('.popup__form');
 
 function openCardPopup() {
     openPopup(popupAdd);
-    /*enableValidation({
-        formSelector : '.popup__form',
-        inputSelector : '.popup__input',
-        submitButtonSelector : '.popup__submit',
-        inactiveButtonClass : 'popup__submit_disabled',
-        inputErrorClass : 'popup__input_type_error',
-        errorClass : 'popup__span-error_type_active'
-      });*/
 };
 
 profileAddButton.addEventListener('click', openCardPopup);
@@ -150,7 +143,8 @@ popupAddForm.addEventListener('submit', (evt) => {
     link: popupAddLink.value
     };
 
-    addNewCard(newCard);
+    const elementCard = new Card (newCard);
+    elementCard.addNewCard();
 
     closePopup(popupAdd);
     
@@ -159,24 +153,12 @@ popupAddForm.addEventListener('submit', (evt) => {
 })
 
 
-function removeCard(event){
-    const todo = event.currentTarget.closest('.cards__place');
-
-    todo.remove();
-}
-
-function setDeleteButtonListener(item){
-    item.querySelector('.cards__delete-button').addEventListener('click', removeCard);
-}
-
 const popupFullSize = document.querySelector('#popup-full-size');
 const popupFullSizeImg = popupFullSize.querySelector('.popup__image');
 const popupFullSizePlaceName = document.querySelector('.popup__place-name');
 const popupFullSizeCloseButton = popupFullSize.querySelector('.popup__close-button')
 
-function setImageClickListener (item) {
-    item.addEventListener('click', openFullSizePopup);
-}
+
 function openFullSizePopup(evt){
     const item = evt.currentTarget.closest('.cards__place');
     popupFullSizeImg.src = item.querySelector('.cards__place-img').src;
@@ -192,11 +174,4 @@ function closeFullSizePopup(){
 popupFullSizeCloseButton.addEventListener('click', closeFullSizePopup);
 
 
-function toggleLike(event){
-    event.currentTarget.classList.toggle('cards__like-button_active');
-}
-
-function setLikeButtonListener(item){
-    item.addEventListener('click', toggleLike);
-}
-
+export {openFullSizePopup};
