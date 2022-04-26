@@ -1,34 +1,11 @@
 import { Card } from "./Card.js";
 import { FormValidator } from "./FormValidator.js";
-
-const profileEditButton = document.querySelector('.profile__edit-button');
-const popupEdit = document.querySelector('#popup-edit');
-const popupEditCloseButton = popupEdit.querySelector('.popup__close-button');
-const profileName = document.querySelector('.profile__name');
-const popupEditName = popupEdit.querySelector('.popup__input_type_name');
-const profileEmployment = document.querySelector('.profile__employment');
-const popupEditEmployment = popupEdit.querySelector('.popup__input_type_employment');
-
-const objectValidation = {
-    formSelector : '.popup__form',
-    inputSelector : '.popup__input',
-    submitButtonSelector : '.popup__submit',
-    inactiveButtonClass : 'popup__submit_disabled',
-    inputErrorClass : 'popup__input_type_error',
-    errorClass : 'popup__span-error_type_active',
-    editButtonSelector : '.profile__edit-button',
-    addButtonSelector : '.profile__add-button'
-  }
-
-  const newFormValidator = new FormValidator(objectValidation);
-
-  newFormValidator.enableValidation();
-
-
+import { templateSelector, cardsSelector, objectValidation, initialCards, profileEditButton, popupEdit, popupEditCloseButton, profileName, popupEditName, profileEmployment, popupEditEmployment, popupEditForm, popupAdd, popupAddName, popupAddLink, profileAddButton, popupAddCloseButton, popupAddForm, popupFullSize, popupFullSizeImg, popupFullSizePlaceName, popupFullSizeCloseButton} from "./utils.js";
+ 
 function openPopup (popup){
     popup.classList.add('popup_opened');
     document.addEventListener('keydown', isEscapeKeydown);
-    popup.addEventListener('click', isOverlay);
+    popup.addEventListener('mousedown', isOverlay);
 };
 
 function closePopup (popup){
@@ -54,6 +31,8 @@ function isOverlay(evt){
 function openProfilePopup(){
     setProfilePopupValues();
     openPopup(popupEdit);
+    const newFormValidator = new FormValidator(objectValidation);
+    newFormValidator.enableValidation();
 }
 function closeProfilePopup(){
     closePopup(popupEdit);
@@ -64,12 +43,9 @@ function setProfilePopupValues (){
     popupEditEmployment.value = profileEmployment.textContent;
 }
 
-
 profileEditButton.addEventListener('click', openProfilePopup);
 
 popupEditCloseButton.addEventListener('click', closeProfilePopup);
-
-const popupEditForm = popupEdit.querySelector('.popup__container')
 
 function handleProfileFormSubmit (evt) {
     evt.preventDefault(); 
@@ -81,49 +57,17 @@ function handleProfileFormSubmit (evt) {
 
 popupEditForm.addEventListener('submit', handleProfileFormSubmit);
 
-const initialCards = [
-    {
-      name: 'Архыз',
-      link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/arkhyz.jpg'
-    },
-    {
-      name: 'Челябинская область',
-      link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/chelyabinsk-oblast.jpg'
-    },
-    {
-      name: 'Иваново',
-      link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/ivanovo.jpg'
-    },
-    {
-      name: 'Камчатка',
-      link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/kamchatka.jpg'
-    },
-    {
-      name: 'Холмогорский район',
-      link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/kholmogorsky-rayon.jpg'
-    },
-    {
-      name: 'Байкал',
-      link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/baikal.jpg'
-    }
-  ];
-
-
 
 initialCards.forEach((item)=>{
-    const elementCard = new Card (item);
-    return elementCard.addNewCard();
+    const elementCard = new Card (item, openFullSizePopup, templateSelector);
+    elementCard.addNewCard(cardsSelector);
 });
 
-const popupAdd = document.querySelector('#popup-add');
-const popupAddName = popupAdd.querySelector('.popup__input_type_name');
-const popupAddLink = popupAdd.querySelector('.popup__input_type_employment');
-const profileAddButton = document.querySelector('.profile__add-button');
-const popupAddCloseButton = popupAdd.querySelector('.popup__close-button');
-const popupAddForm = popupAdd.querySelector('.popup__form');
 
 function openCardPopup() {
     openPopup(popupAdd);
+    const newFormValidator = new FormValidator(objectValidation);
+    newFormValidator.enableValidation();
 };
 
 profileAddButton.addEventListener('click', openCardPopup);
@@ -143,21 +87,15 @@ popupAddForm.addEventListener('submit', (evt) => {
     link: popupAddLink.value
     };
 
-    const elementCard = new Card (newCard);
-    elementCard.addNewCard();
-
+    const elementCard = new Card (newCard, openFullSizePopup, templateSelector);
+    
+    elementCard.addNewCard(cardsSelector);
+    
     closePopup(popupAdd);
     
     evt.currentTarget.reset();
 
 })
-
-
-const popupFullSize = document.querySelector('#popup-full-size');
-const popupFullSizeImg = popupFullSize.querySelector('.popup__image');
-const popupFullSizePlaceName = document.querySelector('.popup__place-name');
-const popupFullSizeCloseButton = popupFullSize.querySelector('.popup__close-button')
-
 
 function openFullSizePopup(evt){
     const item = evt.currentTarget.closest('.cards__place');
@@ -173,5 +111,3 @@ function closeFullSizePopup(){
 
 popupFullSizeCloseButton.addEventListener('click', closeFullSizePopup);
 
-
-export {openFullSizePopup};

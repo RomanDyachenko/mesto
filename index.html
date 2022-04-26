@@ -39,9 +39,9 @@
             <button type="button" class="popup__close-button"></button>
             <h2 class="popup__title">Редактировать профиль</h2>
             <form class="popup__form" name="form-edit" novalidate>
-                <input class="popup__input popup__input_type_name" id="name" type="text" minlength="2" maxlength="40" required>
+                <input class="popup__input popup__input_type_name" placeholder="Имя" id="name" type="text" minlength="2" maxlength="40" required>
                 <span class="popup__span-error" id="error-name"></span>
-                <input class="popup__input popup__input_type_employment" id="employment" type="text" minlength="2" maxlength="200" required>
+                <input class="popup__input popup__input_type_employment" placeholder="Профессия" id="employment" type="text" minlength="2" maxlength="200" required>
                 <span class="popup__span-error" id="error-employment"></span>
                 <button class="popup__submit" type="submit" >Сохранить</button>
             </form>
@@ -81,7 +81,5 @@
         </div>
     </template>
     <script src="./script/index.js" type="module"></script>
-    <script src="./script/validate.js" type="module"></script>
-    <script src="./script/Card.js" type="module"></script>
 </body>
 </html>

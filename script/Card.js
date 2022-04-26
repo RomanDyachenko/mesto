@@ -1,29 +1,31 @@
-import {openFullSizePopup} from './index.js';
-
 export class Card {
-    constructor (data) {
+
+    constructor (data, openFullSizePopup, templateSelector) {
+        this._templateSelector = templateSelector;
         this._name = data.name;
         this._link = data.link;
+        this._openFullSizePopup = openFullSizePopup;
+        this._templateElement = this._templateSelector.content.firstElementChild.cloneNode(true);
+        this._templateButton = this._templateElement.querySelector('.cards__like-button')
+        this._templateName = this._templateElement.querySelector('.cards__name');
+        this._templateImg = this._templateElement.querySelector('.cards__place-img');
     }
 
+    
     _createCard = () => {
-        const _templateElement = document.querySelector('#template').content.firstElementChild.cloneNode(true);
-        const _templateButton = _templateElement.querySelector('.cards__like-button')
-        const _templateName = _templateElement.querySelector('.cards__name');
-        const _templateImg = _templateElement.querySelector('.cards__place-img');
-        _templateName.textContent = this._name;
-        _templateImg.src = this._link;
-        _templateImg.alt = this._name;
-        this._setDeleteButtonListener(_templateElement);
-        this._setImageClickListener(_templateImg);
-        this._setLikeButtonListener(_templateButton);
-        return _templateElement;
+        this._templateName.textContent = this._name;
+        this._templateImg.src = this._link;
+        this._templateImg.alt = this._name;
+        this._setDeleteButtonListener(this._templateElement);
+        this._setImageClickListener(this._templateImg);
+        this._setLikeButtonListener(this._templateButton);
+        return this._templateElement;
     }
 
     _removeCard = (event) => {
-        const _todo = event.currentTarget.closest('.cards__place');
-    
-        _todo.remove();
+        this._todo = event.currentTarget.closest('.cards__place').remove();
+        
+        this.todo = null;
     }
 
     _setDeleteButtonListener = (item) => {
@@ -31,7 +33,7 @@ export class Card {
     }
 
     _setImageClickListener = (item) => {
-        item.addEventListener('click', openFullSizePopup);
+        item.addEventListener('click', this._openFullSizePopup);
     }
 
     _toggleLike = (event) => {
@@ -42,9 +44,8 @@ export class Card {
         item.addEventListener('click', this._toggleLike);
     }
 
-    addNewCard = () => {
-        const sectionCards = document.querySelector('.cards');
-        sectionCards.prepend(this._createCard());
+    addNewCard = (container) => {
+        container.prepend(this._createCard());
     }
 
 
