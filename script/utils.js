@@ -1,6 +1,6 @@
 const  templateSelector = document.querySelector('#template');
 
-const cardsSelector = document.querySelector('.cards');
+const cardsContainer = document.querySelector('.cards');
 const profileEditButton = document.querySelector('.profile__edit-button');
 const popupEdit = document.querySelector('#popup-edit');
 const popupEditCloseButton = popupEdit.querySelector('.popup__close-button');
@@ -19,9 +19,13 @@ const popupFullSize = document.querySelector('#popup-full-size');
 const popupFullSizeImg = popupFullSize.querySelector('.popup__image');
 const popupFullSizePlaceName = document.querySelector('.popup__place-name');
 const popupFullSizeCloseButton = popupFullSize.querySelector('.popup__close-button')
+const popupAddId = '#popup-add';
+const popupEditId = '#popup-edit';
+
 
 const objectValidation = {
-    formSelector : '.popup__form',
+    popupAdd : '#popup-add',
+    popupEdit : '#popup-edit',
     inputSelector : '.popup__input',
     submitButtonSelector : '.popup__submit',
     inactiveButtonClass : 'popup__submit_disabled',
@@ -29,7 +33,6 @@ const objectValidation = {
     errorClass : 'popup__span-error_type_active',
     editButtonSelector : '.profile__edit-button',
     addButtonSelector : '.profile__add-button',
-    popupOpened : '.popup_opened'
   }
 
 const initialCards = [
@@ -59,4 +62,4 @@ const initialCards = [
     }
   ];  
 
-export {templateSelector, cardsSelector, objectValidation, initialCards, profileEditButton, popupEdit, popupEditCloseButton, profileName, popupEditName, profileEmployment, popupEditEmployment, popupEditForm, popupAdd, popupAddName, popupAddLink, profileAddButton, popupAddCloseButton, popupAddForm, popupFullSize, popupFullSizeImg, popupFullSizePlaceName, popupFullSizeCloseButton};
+export {templateSelector, cardsContainer, objectValidation, initialCards, profileEditButton, popupEdit, popupEditCloseButton, profileName, popupEditName, profileEmployment, popupEditEmployment, popupEditForm, popupAdd, popupAddName, popupAddLink, profileAddButton, popupAddCloseButton, popupAddForm, popupFullSize, popupFullSizeImg, popupFullSizePlaceName, popupFullSizeCloseButton, popupAddId, popupEditId};

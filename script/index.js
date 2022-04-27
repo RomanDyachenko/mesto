@@ -1,7 +1,15 @@
 import { Card } from "./Card.js";
 import { FormValidator } from "./FormValidator.js";
-import { templateSelector, cardsSelector, objectValidation, initialCards, profileEditButton, popupEdit, popupEditCloseButton, profileName, popupEditName, profileEmployment, popupEditEmployment, popupEditForm, popupAdd, popupAddName, popupAddLink, profileAddButton, popupAddCloseButton, popupAddForm, popupFullSize, popupFullSizeImg, popupFullSizePlaceName, popupFullSizeCloseButton} from "./utils.js";
+import { templateSelector, cardsContainer, objectValidation, initialCards, profileEditButton, popupEdit, popupEditCloseButton, profileName, popupEditName, profileEmployment, popupEditEmployment, popupEditForm, popupAdd, popupAddName, popupAddLink, profileAddButton, popupAddCloseButton, popupAddForm, popupFullSize, popupFullSizeImg, popupFullSizePlaceName, popupFullSizeCloseButton, popupAddId, popupEditId} from "./utils.js";
  
+const newFormValidatorEdit = new FormValidator(objectValidation, popupEditId);
+newFormValidatorEdit.enableValidation();
+
+
+const newFormValidatorAdd = new FormValidator(objectValidation, popupAddId);
+newFormValidatorAdd.enableValidation();
+
+
 function openPopup (popup){
     popup.classList.add('popup_opened');
     document.addEventListener('keydown', isEscapeKeydown);
@@ -31,8 +39,6 @@ function isOverlay(evt){
 function openProfilePopup(){
     setProfilePopupValues();
     openPopup(popupEdit);
-    const newFormValidator = new FormValidator(objectValidation);
-    newFormValidator.enableValidation();
 }
 function closeProfilePopup(){
     closePopup(popupEdit);
@@ -60,14 +66,12 @@ popupEditForm.addEventListener('submit', handleProfileFormSubmit);
 
 initialCards.forEach((item)=>{
     const elementCard = new Card (item, openFullSizePopup, templateSelector);
-    elementCard.addNewCard(cardsSelector);
+    elementCard.addNewCard(cardsContainer);
 });
 
 
 function openCardPopup() {
     openPopup(popupAdd);
-    const newFormValidator = new FormValidator(objectValidation);
-    newFormValidator.enableValidation();
 };
 
 profileAddButton.addEventListener('click', openCardPopup);
@@ -89,11 +93,14 @@ popupAddForm.addEventListener('submit', (evt) => {
 
     const elementCard = new Card (newCard, openFullSizePopup, templateSelector);
     
-    elementCard.addNewCard(cardsSelector);
+    elementCard.addNewCard(cardsContainer);
+
     
     closePopup(popupAdd);
     
     evt.currentTarget.reset();
+
+    newFormValidatorAdd.toggleButtonState();
 
 })
 

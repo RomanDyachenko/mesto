@@ -22,14 +22,14 @@ export class Card {
         return this._templateElement;
     }
 
-    _removeCard = (event) => {
-        this._todo = event.currentTarget.closest('.cards__place').remove();
+    _removeCard = () => {
+        this._templateElement.remove();
         
-        this.todo = null;
+        this._templateElement = null;
     }
 
     _setDeleteButtonListener = (item) => {
-        item.querySelector('.cards__delete-button').addEventListener('click', this._removeCard);
+        item.querySelector('.cards__delete-button').addEventListener('click', () => this._removeCard());
     }
 
     _setImageClickListener = (item) => {
