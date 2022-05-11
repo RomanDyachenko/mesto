@@ -56,9 +56,9 @@ const newPopupWithFormAdd = new PopupWithForm (popupAdd, newFormValidatorAdd, {s
     newSection.addItem(elementCard);
 }})
 
-const setProfilePopupValues = ({name, employment}) => {
-    popupEditName.value = name;
-    popupEditEmployment.value = employment
+const setProfilePopupValues = ({profileName, profileEmployment}) => {
+    popupEditName.value = profileName;
+    popupEditEmployment.value = profileEmployment
 }
 
 profileEditButton.addEventListener('click', () => {
