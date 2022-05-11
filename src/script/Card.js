@@ -1,9 +1,9 @@
 export class Card {
 
-    constructor (data, openFullSizePopup, templateSelector) {
+    constructor ({name, link}, {openFullSizePopup}, templateSelector) {
+        this._name = name;
+        this._link = link;
         this._templateSelector = templateSelector;
-        this._name = data.name;
-        this._link = data.link;
         this._openFullSizePopup = openFullSizePopup;
         this._templateElement = this._templateSelector.content.firstElementChild.cloneNode(true);
         this._templateButton = this._templateElement.querySelector('.cards__like-button')
@@ -12,12 +12,12 @@ export class Card {
     }
 
     
-    _createCard = () => {
+    createCard = () => {
         this._templateName.textContent = this._name;
         this._templateImg.src = this._link;
         this._templateImg.alt = this._name;
         this._setDeleteButtonListener(this._templateElement);
-        this._setImageClickListener(this._templateImg);
+        this._handleCardClick(this._templateImg);
         this._setLikeButtonListener(this._templateButton);
         return this._templateElement;
     }
@@ -32,7 +32,7 @@ export class Card {
         item.querySelector('.cards__delete-button').addEventListener('click', () => this._removeCard());
     }
 
-    _setImageClickListener = (item) => {
+    _handleCardClick = (item) => {
         item.addEventListener('click', this._openFullSizePopup);
     }
 
@@ -42,10 +42,6 @@ export class Card {
 
     _setLikeButtonListener = (item) => {
         item.addEventListener('click', this._toggleLike);
-    }
-
-    addNewCard = (container) => {
-        container.prepend(this._createCard());
     }
 
 
