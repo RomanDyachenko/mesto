@@ -1,6 +1,6 @@
 export class FormValidator {
-    constructor (data, formSelector){
-        this._formSelector = formSelector;
+    constructor (data, formElement){
+        this._formElement = formElement;
         this._inputSelector = data.inputSelector;
         this._submitButtonSelector = data.submitButtonSelector;
         this._inactiveButtonClass = data.inactiveButtonClass;
@@ -8,20 +8,19 @@ export class FormValidator {
         this._errorClass = data.errorClass;
         this._editButtonSelector = data.editButtonSelector;
         this._addButtonSelector = data.addButtonSelector;
-        this._form = document.querySelector(this._formSelector);
-        this._inputList = Array.from(this._form.querySelectorAll(this._inputSelector));
-        this._buttonElement = this._form.querySelector(this._submitButtonSelector);
+        this._inputList = Array.from(this._formElement.querySelectorAll(this._inputSelector));
+        this._buttonElement = this._formElement.querySelector(this._submitButtonSelector);
     }
 
     _showInputError = (_inputElement, _errorMessage) => {
-        const _errorElement = this._form.querySelector(`#error-${_inputElement.id}`);
+        const _errorElement = this._formElement.querySelector(`#error-${_inputElement.id}`);
         _inputElement.classList.add(this._inputErrorClass);
         _errorElement.textContent = _errorMessage;
         _errorElement.classList.add(this._errorClass);
     }
     
     _hideInputError = (_inputElement) => {
-        const _errorElement = this._form.querySelector(`#error-${_inputElement.id}`);
+        const _errorElement = this._formElement.querySelector(`#error-${_inputElement.id}`);
         _inputElement.classList.remove(this._inputErrorClass);
         _errorElement.classList.remove(this._errorClass);
         _errorElement.textContent = '';
@@ -49,7 +48,7 @@ export class FormValidator {
     
     _hasInvalidInput = () => {
         return this._inputList.some((_inputElement) => {
-            return !_inputElement.validity.valid || _inputElement.value === '';
+            return !_inputElement.validity.valid;
         })
     }
     
@@ -66,7 +65,7 @@ export class FormValidator {
 
     enableValidation = () => {
         this.toggleButtonState();
-        this._setEventListeners(this._form);
+        this._setEventListeners();
         
     }
 

@@ -1,4 +1,4 @@
-const  templateSelector = document.querySelector('#template');
+const  templateContainer = document.querySelector('#template');
 
 const cardsContainer = document.querySelector('.cards');
 const profileEditButton = document.querySelector('.profile__edit-button');
@@ -21,7 +21,10 @@ const popupFullSizePlaceName = document.querySelector('.popup__place-name');
 const popupFullSizeCloseButton = popupFullSize.querySelector('.popup__close-button')
 const popupAddId = '#popup-add';
 const popupEditId = '#popup-edit';
-
+const objectUserInfo = {
+  profileName: document.querySelector('.profile__name'),
+  profileEmployment: document.querySelector('.profile__employment')
+}
 
 const objectValidation = {
     popupAdd : '#popup-add',
@@ -62,4 +65,4 @@ const initialCards = [
     }
   ];  
 
-export {templateSelector, cardsContainer, objectValidation, initialCards, profileEditButton, popupEdit, popupEditCloseButton, profileName, popupEditName, profileEmployment, popupEditEmployment, popupEditForm, popupAdd, popupAddName, popupAddLink, profileAddButton, popupAddCloseButton, popupAddForm, popupFullSize, popupFullSizeImg, popupFullSizePlaceName, popupFullSizeCloseButton, popupAddId, popupEditId};
+export {templateContainer, cardsContainer, objectValidation, initialCards, profileEditButton, popupEdit, popupEditCloseButton, profileName, popupEditName, profileEmployment, popupEditEmployment, popupEditForm, popupAdd, popupAddName, popupAddLink, profileAddButton, popupAddCloseButton, popupAddForm, popupFullSize, popupFullSizeImg, popupFullSizePlaceName, popupFullSizeCloseButton, popupAddId, popupEditId, objectUserInfo};

@@ -1,5 +1,5 @@
 export default class UserInfo {
-    constructor (profileName, profileEmployment) {
+    constructor ({profileName, profileEmployment}) {
         this._profileName = profileName;
         this._profileEmployment = profileEmployment;
     }
