@@ -28,7 +28,7 @@ export class Card {
 
     _setEventListeners = () => {
         this._templateElement.querySelector('.cards__delete-button').addEventListener('click', () => this._removeCard());
-        this._templateImg.addEventListener('click', () => {this._openFullSizePopup(this._templateElement)});
+        this._templateImg.addEventListener('click', () => {this._openFullSizePopup(this._link, this._name)});
         this._templateButton.addEventListener('click', () => {
             this._templateButton.classList.toggle('cards__like-button_active')
         })

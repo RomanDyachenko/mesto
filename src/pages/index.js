@@ -4,17 +4,15 @@ import { FormValidator } from "../components/FormValidator.js";
 import PopupWithImage from '../components/PopupWithImage.js';
 import PopupWithForm from "../components/PopupWithForm.js";
 import UserInfo from "../components/UserInfo.js";
-import { templateContainer, cardsContainer, objectValidation, initialCards, profileEditButton, popupEdit, popupEditCloseButton, profileName, popupEditName, profileEmployment, popupEditEmployment, popupEditForm, popupAdd, popupAddName, popupAddLink, profileAddButton, popupAddCloseButton, popupAddForm, popupFullSize, popupFullSizeImg, popupFullSizePlaceName, popupFullSizeCloseButton, popupAddId, popupEditId, objectUserInfo} from "../components/utils.js";
+import { templateContainer, cardsContainer, objectValidation, initialCards, profileEditButton, popupEdit, popupEditName, popupEditEmployment, popupAdd, profileAddButton, popupAddId, popupEditId, objectUserInfo, popupFullSizeId} from "./utils/utils.js";
 import Section from "../components/Section.js";
 
  
 const newUserInfo = new UserInfo (objectUserInfo);
 
 function createCard (item) {
-    const newCard = new Card ( item, {openFullSizePopup: (element) => {
-        const cardImg = element.querySelector('.cards__place-img');
-        const cardTxt = element.querySelector('.cards__name');
-        newFullSizePopup.open(cardImg, cardTxt);
+    const newCard = new Card ( item, {openFullSizePopup: (cardImgSrc, cardImgTxt) => {
+        newFullSizePopup.open(cardImgSrc, cardImgTxt);
     }}, templateContainer);
     
     return newCard.createCard();
@@ -40,16 +38,16 @@ const newFormValidatorAdd = new FormValidator(objectValidation, popupAdd);
 newFormValidatorAdd.enableValidation();
 
 
-const newFullSizePopup = new PopupWithImage (popupFullSize, popupFullSizeImg, popupFullSizePlaceName);
+const newFullSizePopup = new PopupWithImage (popupFullSizeId);
 newFullSizePopup.setEventListeners();
 
-const newPopupWithFormEdit = new PopupWithForm(popupEdit, {submitForm: (inputList) => {
+const newPopupWithFormEdit = new PopupWithForm(popupEditId, {submitForm: (inputList) => {
     newUserInfo.setUserInfo(inputList);
 }})
 newPopupWithFormEdit.setEventListeners();
 
 
-const newPopupWithFormAdd = new PopupWithForm (popupAdd, {submitForm: (inputList) => {
+const newPopupWithFormAdd = new PopupWithForm (popupAddId, {submitForm: (inputList) => {
     const cardList = {
         name: inputList.place,
         link: inputList.url
