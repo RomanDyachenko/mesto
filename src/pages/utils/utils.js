@@ -1,6 +1,6 @@
 const  templateContainer = document.querySelector('#template');
 
-const cardsContainer = document.querySelector('.cards');
+const cardsSelector = '.cards';
 const profileEditButton = document.querySelector('.profile__edit-button');
 const popupEdit = document.querySelector('#popup-edit');
 const popupEditCloseButton = popupEdit.querySelector('.popup__close-button');
@@ -66,4 +66,4 @@ const initialCards = [
     }
   ];  
 
-export {templateContainer, cardsContainer, objectValidation, initialCards, profileEditButton, popupEdit, popupEditCloseButton, profileName, popupEditName, profileEmployment, popupEditEmployment, popupEditForm, popupAdd, popupAddName, popupAddLink, profileAddButton, popupAddCloseButton, popupAddForm, popupFullSize, popupFullSizeImg, popupFullSizePlaceName, popupFullSizeCloseButton, popupAddId, popupEditId, objectUserInfo, popupFullSizeId};
+export {templateContainer, cardsSelector, objectValidation, initialCards, profileEditButton, popupEdit, popupEditCloseButton, profileName, popupEditName, profileEmployment, popupEditEmployment, popupEditForm, popupAdd, popupAddName, popupAddLink, profileAddButton, popupAddCloseButton, popupAddForm, popupFullSize, popupFullSizeImg, popupFullSizePlaceName, popupFullSizeCloseButton, popupAddId, popupEditId, objectUserInfo, popupFullSizeId};

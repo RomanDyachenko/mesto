@@ -4,7 +4,7 @@ import { FormValidator } from "../components/FormValidator.js";
 import PopupWithImage from '../components/PopupWithImage.js';
 import PopupWithForm from "../components/PopupWithForm.js";
 import UserInfo from "../components/UserInfo.js";
-import { templateContainer, cardsContainer, objectValidation, initialCards, profileEditButton, popupEdit, popupEditName, popupEditEmployment, popupAdd, profileAddButton, popupAddId, popupEditId, objectUserInfo, popupFullSizeId} from "./utils/utils.js";
+import { templateContainer, cardsSelector, objectValidation, initialCards, profileEditButton, popupEdit, popupEditName, popupEditEmployment, popupAdd, profileAddButton, popupAddId, popupEditId, objectUserInfo, popupFullSizeId} from "./utils/utils.js";
 import Section from "../components/Section.js";
 
  
@@ -26,7 +26,7 @@ const newSection = new Section ({data: initialCards, renderer: (item) => {
 
     newSection.addItem(newCardExemplar);
     
-}}, cardsContainer);
+}}, cardsSelector);
 
 
 newSection.renderItems();
