@@ -14,7 +14,12 @@
         <main>
             <section class="profile">
                 <div class="profile__info">
-                    <img src="<%=require('./images/kusto.jpg')%>" alt="Кусто" class="profile__avatar">
+                    <button type="button" class="profile__avatar-button">
+                        <div class="profile__avatar-container">
+                        
+                            <img src="<%=require('./images/kusto.jpg')%>" alt="Кусто" class="profile__avatar">
+                        </div>
+                    </button>
                     <div class="profile__info-container"> 
                         <h1 id="profileName" class="profile__name">Жак-Ив Кусто</h1>
                         <p id="profileEmployment" class="profile__employment">Исследователь океана</p>
@@ -55,7 +60,7 @@
                 <span class="popup__span-error" id="error-place"></span>
                 <input class="popup__input popup__input_type_employment" id="url" type="url" placeholder="Ссылка на картинку" required>
                 <span class="popup__span-error" id="error-url"></span>
-                <button class="popup__submit" type="submit">Создать</button>
+                <button class="popup__submit" type="submit">Сохранить</button>
             </form>
         </div>
     </div>
@@ -67,15 +72,37 @@
         </div>
         <p class="popup__place-name"></p>
     </div>
+    <div class="popup popup_type_confidence" id="popup-confidence">
+        <div class="popup__container popup__container_confidence">
+            <button type="button" class="popup__close-button"></button>
+            <h2 class="popup__title">Вы уверены?</h2>
+            <form class="popup__form popup__form_confidence" name="form-confidence" novalidate>
+                <button class="popup__submit" type="submit">Да</button>
+            </form>
+        </div>
+    </div>
+    <div class="popup popup_type_avatar" id="popup-avatar">
+        <div class="popup__container popup__container_avatar">
+            <button type="button" class="popup__close-button"></button>
+            <h2 class="popup__title">Обновить аватар</h2>
+            <form class="popup__form popup__form_avatar" name="form-edit" novalidate>
+                <input class="popup__input popup__input_type_employment" id="url" type="url" placeholder="Ссылка на аватар" required>
+                <span class="popup__span-error" id="error-url"></span>
+                <button class="popup__submit popup__submit_avatar" type="submit" >Сохранить</button>
+            </form>
+        </div>
     <template id="template">
         <div class="cards__place">
             <button type="button" class="cards__delete-button"></button>
-            <img src="https://pictures.s3.yandex.net/frontend-developer/cards-compressed/arkhyz.jpg" alt="" class="cards__place-img">
+            <img src="" alt="" class="cards__place-img">
             <div class="cards__name-container">
                 <h2 class="cards__name">
 
                 </h2>
-                <button type="button" class="cards__like-button"></button>
+                <div class="cards__like-container">
+                    <button type="button" class="cards__like-button"></button>
+                    <div class="cards__like-numbers">0</div>
+                </div>
             </div>
         </div>
     </template>

@@ -2,6 +2,7 @@ const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
+const { webpack } = require('webpack');
 
 module.exports = {
   entry: {
@@ -14,10 +15,14 @@ module.exports = {
   },
   mode: 'development',
   devServer: {
-    contentBase: path.resolve(__dirname, './dist'),
+    historyApiFallback: true,
+    hot: true,
+    static: {
+      directory: path.join(__dirname, './dist'),
+    },
     open: true,
     compress: true,
-    port: 8080
+    port: 8080,
   },
   module: {
     rules: [{
@@ -48,6 +53,5 @@ module.exports = {
     }),
     new CleanWebpackPlugin(),
     new MiniCssExtractPlugin(),
-
   ]
 }

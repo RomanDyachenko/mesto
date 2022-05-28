@@ -1,5 +1,9 @@
 const  templateContainer = document.querySelector('#template');
 
+const profileAvatar = document.querySelector('.profile__avatar')
+const profileAvatarButton = document.querySelector('.profile__avatar-button')
+const popupAvatar = document.querySelector('#popup-avatar')
+const cardLikesNumberSelector = '.cards__like-numbers';
 const cardsSelector = '.cards';
 const profileEditButton = document.querySelector('.profile__edit-button');
 const popupEdit = document.querySelector('#popup-edit');
@@ -22,9 +26,12 @@ const popupFullSizeCloseButton = popupFullSize.querySelector('.popup__close-butt
 const popupAddId = '#popup-add';
 const popupEditId = '#popup-edit';
 const popupFullSizeId = '#popup-full-size';
+const popupSubmitId = '#popup-confidence';
+const popupAvatarId = '#popup-avatar';
 const objectUserInfo = {
   profileNameSelector: '.profile__name',
-  profileEmploymentSelector: '.profile__employment'
+  profileEmploymentSelector: '.profile__employment',
+  profileAvatarSelector: '.profile__avatar'
 }
 
 const objectValidation = {
@@ -66,4 +73,4 @@ const initialCards = [
     }
   ];  
 
-export {templateContainer, cardsSelector, objectValidation, initialCards, profileEditButton, popupEdit, popupEditCloseButton, profileName, popupEditName, profileEmployment, popupEditEmployment, popupEditForm, popupAdd, popupAddName, popupAddLink, profileAddButton, popupAddCloseButton, popupAddForm, popupFullSize, popupFullSizeImg, popupFullSizePlaceName, popupFullSizeCloseButton, popupAddId, popupEditId, objectUserInfo, popupFullSizeId};
+export {profileAvatar, profileAvatarButton, popupAvatarId, popupAvatar, popupSubmitId, cardLikesNumberSelector, templateContainer, cardsSelector, objectValidation, initialCards, profileEditButton, popupEdit, popupEditCloseButton, profileName, popupEditName, profileEmployment, popupEditEmployment, popupEditForm, popupAdd, popupAddName, popupAddLink, profileAddButton, popupAddCloseButton, popupAddForm, popupFullSize, popupFullSizeImg, popupFullSizePlaceName, popupFullSizeCloseButton, popupAddId, popupEditId, objectUserInfo, popupFullSizeId};
