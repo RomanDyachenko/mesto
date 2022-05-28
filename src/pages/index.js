@@ -209,7 +209,7 @@ const newPopupWithFormAvatar = new PopupWithForm (popupAvatarId, {
             'Content-Type': 'application/json'
         },
         {
-            avatar: inputList.url
+            avatar: inputList.link
         })
         .then(res => {
             return res;
