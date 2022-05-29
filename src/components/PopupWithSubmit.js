@@ -1,23 +1,35 @@
-import Popup from "./Popup";
+import Popup from "./Popup"; 
 
-export default class PopupWithSubmit extends Popup{
-    constructor(popupElement, {submitForm}){
-        super(popupElement)
-        this._submitForm = submitForm;
-        this._popupForm = this._popupElement.querySelector('.popup__form');
-    }
+ 
 
-    open(element, id){
+export default class PopupWithSubmit extends Popup{ 
+
+    constructor(popupElement, {submitForm}){ 
+
+        super(popupElement) 
+
+        this._submitForm = submitForm; 
+
+        this._popupForm = this._popupElement.querySelector('.popup__form'); 
+
+    } 
+
+
+    open (removeCard, element, id) {
         super.open();
-        this._popupForm.addEventListener('submit', (evt) => {this._handleSubmitListener(evt, element, id)});
+        
+        this._popupForm.addEventListener('submit', (evt) => {
+            evt.preventDefault()
+            this._handleSubmitListener(removeCard, element, id);
+        }, {once: true});
     }
 
-    _handleSubmitListener = (evt, element, id) => {
-        evt.preventDefault();
-        this._submitForm(element, id);
-        this.close();
-    }
 
+    _handleSubmitListener = (removeCard, element, id) => { 
 
-    getIdValue = Promise.resolve().then(res => {return res})
+        this._submitForm(removeCard, element, id, this.close); 
+ 
+
+    } 
+
 }

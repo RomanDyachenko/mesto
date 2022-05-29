@@ -5,8 +5,12 @@ export default class Section {
     }
 
 
-    addItem = (element) => { 
+    addNewItem = (element) => { 
         this._containerElement.prepend(element);
+    }
+
+    addItems = (element) => {
+        this._containerElement.append(element);
     }
 
     renderItems = (obj, data) => {

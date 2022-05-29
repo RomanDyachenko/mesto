@@ -1,19 +1,30 @@
 export default class Api {
-    constructor(){
-        
+
+_returnResult = (res) => {
+    if (res.ok){
+        return res.json();
     }
 
-getAllInfo = (url, headers) => {
+    return Promise.reject("Something gone wrong");
+}
+
+getCardsInfo = (url, headers) => {
     return fetch(url, {
         method: "GET",
         headers: headers
     })
     .then ((res) => {
-        if (res.ok){
-            return res.json();
-        }
+       return this._returnResult(res)
+    })
+}
 
-        return Promise.reject("Something gone wrong");
+getUserInfo = (url, headers) => {
+    return fetch(url, {
+        method: "GET",
+        headers: headers
+    })
+    .then ((res) => {
+       return this._returnResult(res)
     })
 }
 
@@ -25,12 +36,8 @@ patchNewInfo = (url, headers, body) => {
             body
         )})
         .then ((res) => {
-            if (res.ok){
-                return res.json();
-            }
-    
-            return Promise.reject("Something gone wrong");
-        })
+            return this._returnResult(res)
+         })
 
 }
 postNewCard = (url, headers, body) => {
@@ -41,13 +48,9 @@ postNewCard = (url, headers, body) => {
             body
         )
     })
-    .then((res) => {
-        if(res.ok){
-            return res.json();
-        }
-
-        return Promise.reject("Something gone wrong");
-    })
+    .then ((res) => {
+        return this._returnResult(res)
+     })
 }
 
 deleteCard = (url, headers) => {
@@ -55,13 +58,9 @@ deleteCard = (url, headers) => {
         method: 'DELETE',
         headers: headers
     })
-    .then((res) => {
-        if(res.ok){
-            return res.json();
-        }
-
-        return Promise.reject("Something gone wrong");
-    })
+    .then ((res) => {
+        return this._returnResult(res)
+     })
 }
 
 putCardLike = (url, headers) => {
@@ -69,13 +68,9 @@ putCardLike = (url, headers) => {
         method: 'PUT',
         headers: headers
     })
-    .then((res) => {
-        if(res.ok){
-            return res.json();
-        }
-
-        return Promise.reject("Something gone wrong");
-    })
+    .then ((res) => {
+        return this._returnResult(res)
+     })
 }
 
 deleteCardLike = (url, headers) => {
@@ -83,13 +78,9 @@ deleteCardLike = (url, headers) => {
         method: 'DELETE',
         headers: headers
     })
-    .then((res) => {
-        if(res.ok){
-            return res.json();
-        }
-
-        return Promise.reject("Something gone wrong");
-    })
+    .then ((res) => {
+        return this._returnResult(res)
+     })
 }
 
 changeAvatar = (url, headers, body) => {
@@ -100,13 +91,9 @@ changeAvatar = (url, headers, body) => {
             body
         )
     })
-    .then((res) => {
-        if(res.ok){
-            return res.json();
-        }
-
-        return Promise.reject("Something gone wrong");
-    })
+    .then ((res) => {
+        return this._returnResult(res)
+     })
 }
 
 }

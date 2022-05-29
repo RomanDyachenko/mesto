@@ -4,7 +4,7 @@ import { FormValidator } from "../components/FormValidator.js";
 import PopupWithImage from '../components/PopupWithImage.js';
 import PopupWithForm from "../components/PopupWithForm.js";
 import UserInfo from "../components/UserInfo.js";
-import {profileAvatar, profileAvatarButton, popupAvatarId, popupAvatar, popupSubmitId ,templateContainer, cardsSelector, objectValidation, initialCards, profileEditButton, popupEdit, popupEditName, popupEditEmployment, popupAdd, profileAddButton, popupAddId, popupEditId, objectUserInfo, popupFullSizeId} from "./utils/utils.js";
+import {profileAvatar, profileAvatarButton, popupAvatarId, popupAvatar, popupSubmitId ,templateContainer, cardsSelector, objectValidation, initialCards, profileEditButton, popupEdit, popupEditName, popupEditEmployment, popupAdd, profileAddButton, popupAddId, popupEditId, objectUserInfo, popupFullSizeId} from "../utils.js";
 import Section from "../components/Section.js";
 import Api from '../components/Api';
 import PopupWithSubmit from '../components/PopupWithSubmit';
@@ -12,23 +12,19 @@ import PopupWithSubmit from '../components/PopupWithSubmit';
 const newUserInfo = new UserInfo (objectUserInfo)
 const newApi = new Api()
 
-newApi.getAllInfo('https://nomoreparties.co/v1/cohort-41/users/me', {
+let userInfo;
+
+newApi.getUserInfo('https://nomoreparties.co/v1/cohort-41/users/me', {
     authorization: '75fdb49e-7217-4f03-ae58-c16a91160381'
-})
-.then(res => {
-    return res
 })
 .then(data => {
+    userInfo = data
     newUserInfo.setUserInfo(data)
-
-    newApi.getAllInfo('https://mesto.nomoreparties.co/v1/cohort-41/cards', {
+    newApi.getCardsInfo('https://mesto.nomoreparties.co/v1/cohort-41/cards', {
     authorization: '75fdb49e-7217-4f03-ae58-c16a91160381'
 })
-.then(res => {
-    return res;
-})
 .then(items => {
-        newSection.renderItems(items, data)
+        newSection.renderItems(items, data);
     })
 })
 .catch(err => {
@@ -39,13 +35,16 @@ newApi.getAllInfo('https://nomoreparties.co/v1/cohort-41/users/me', {
 
 
 const newPopupWithSubmit = new PopupWithSubmit(popupSubmitId, {
-    submitForm: (element, id) => {
+    submitForm: (removeCard, element, id, close) => {
+        
         newApi.deleteCard(`https://mesto.nomoreparties.co/v1/cohort-41/cards/${id}`, {
             authorization: '75fdb49e-7217-4f03-ae58-c16a91160381'
         })
         .then(() => {
-            element.remove();
-            element = null;
+            removeCard(element);
+        })
+        .then(()=> {
+            close();
         })
         .catch(err => {
             alert (err)
@@ -58,22 +57,20 @@ newPopupWithSubmit.setEventListeners();
 
 
 function createCard (item, data) {
-    const newCard = new Card ( item, data, {openFullSizePopup: (cardImgSrc, cardImgTxt) => {
+    const newCard = new Card ( item, data._id, {openFullSizePopup: (cardImgSrc, cardImgTxt) => {
         newFullSizePopup.open(cardImgSrc, cardImgTxt);
     },
-    handleDeleteIconClick: (element, id) => {
-
-        newPopupWithSubmit.open(element, id);
-        
+    handleDeleteIconClick: (removeCard, element, id) => {
+            newPopupWithSubmit.open(removeCard, element, id); 
     },
-    handleLikeClick: (isLike, checkLikesNumber, id, likeButtonElement) => {
+    handleLikeClick: (isLike, checkLikesNumber, id, deleteLike, addLike) => {
         if (isLike(item)){
             newApi.deleteCardLike(`https://mesto.nomoreparties.co/v1/cohort-41/cards/${id}/likes`, {
                 authorization: '75fdb49e-7217-4f03-ae58-c16a91160381'
             }
             )
             .then((res) => {
-                likeButtonElement.classList.remove('cards__like-button_active');
+                deleteLike();
                 checkLikesNumber(res);
                 return res;
             })
@@ -89,7 +86,7 @@ function createCard (item, data) {
             authorization: '75fdb49e-7217-4f03-ae58-c16a91160381'
         })
         .then((res) => {
-            likeButtonElement.classList.add('cards__like-button_active');
+            addLike();
             checkLikesNumber(res);
             return res
         })
@@ -114,7 +111,7 @@ const newSection = new Section ({renderer: (item, data) => {
 
     const newCardExemplar = createCard(item, data);
 
-    newSection.addItem(newCardExemplar);
+    newSection.addItems(newCardExemplar);
     
 }}, cardsSelector);
 
@@ -145,19 +142,17 @@ const newPopupWithFormEdit = new PopupWithForm(popupEditId, {submitForm: (inputL
         about: inputList.employment
     }
     )
-    .then(res => {
-        return res;
-    })
     .then(obj => {
         newUserInfo.setUserInfo(obj);
     })
-    .finally(() => {
+    .then(() => {
         renderLoading(false);
         close();
     })
     .catch(err => {
         alert(err)
     })
+    
     
 }})
 newPopupWithFormEdit.setEventListeners();
@@ -172,26 +167,13 @@ const newPopupWithFormAdd = new PopupWithForm (popupAddId, {submitForm: (inputLi
         name: inputList.place,
         link: inputList.url
     })
-    .then(res => {
-        return res
-    })
     .then(card => {
-
-        newApi.getAllInfo('https://nomoreparties.co/v1/cohort-41/users/me', {
-        authorization: '75fdb49e-7217-4f03-ae58-c16a91160381'
-        })
-        .then(res => {
-        return res;
-        })
-        .then(obj => {
-            const newCardExemplar = createCard(card, obj);
-            newSection.addItem(newCardExemplar);
-        }
-
-        )
+        console.log(userId)
+        const newCardExemplar = createCard(card, userInfo);
+        newSection.addNewItem(newCardExemplar);
         
     })
-    .finally(() => {
+    .then(() => {
         renderLoading(false);
         close();
     })
@@ -211,16 +193,13 @@ const newPopupWithFormAvatar = new PopupWithForm (popupAvatarId, {
         {
             avatar: inputList.link
         })
-        .then(res => {
-            return res;
-        })
         .then(result => {
             console.log(result)
             profileAvatar.src = result.avatar;
             profileAvatar.alt = `${result.name} ${result.about}`
             
         })
-        .finally(() => {
+        .then(() => {
             renderLoading(false);
             close();
         })

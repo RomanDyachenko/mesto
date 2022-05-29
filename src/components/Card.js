@@ -1,7 +1,7 @@
 export class Card {
 
-    constructor (object, data, {openFullSizePopup, handleDeleteIconClick, handleLikeClick}, templateContainer) {
-        this._data = data;
+    constructor (object, dataId, {openFullSizePopup, handleDeleteIconClick, handleLikeClick}, templateContainer) {
+        this._dataId = dataId;
         this._object = object;
         this._name = object.name;
         this._link = object.link;
@@ -19,7 +19,7 @@ export class Card {
     }
 
     _isOwnerCard = () => {
-        if (this._object.owner._id !== this._data._id){
+        if (this._object.owner._id !== this._dataId){
             this._templateDeleteButton.remove();
         }
     }
@@ -36,15 +36,15 @@ export class Card {
 
     _checkSomeLikes = (obj) => {
        return obj.likes.some((item) => {
-            return item._id == this._data._id
+            return item._id == this._dataId
             })
         }  
 
 
-    removeCard = () => {
-        this._templateElement.remove();
+    removeCard = (element) => {
+        element.remove();
 
-        this._templateElement = null;
+        element = null;
     }
 
     createCard = () => {
@@ -62,15 +62,22 @@ export class Card {
 
 
     _setEventListeners = () => {
-        this._templateDeleteButton.addEventListener('click', () => this._handleDeleteIconClick(this._templateElement, this._id));
+        this._templateDeleteButton.addEventListener('click', () => this._handleDeleteIconClick( this.removeCard, this._templateElement, this._id));
         this._templateImg.addEventListener('click', () => {this._openFullSizePopup(this._link, this._name)});
         this._templateButton.addEventListener('click', () => {
-            this._handleLikeClick(this._checkSomeLikes, this._handleLikesNumber, this._id, this._templateButton)})
+            this._handleLikeClick(this._checkSomeLikes, this._handleLikesNumber, this._id, this.deleteLike, this.addLike)})
     }
 
     _handleLikesNumber = (obj) => {
         this._templateLikesNumber.textContent = obj.likes.length;
     }
 
+    deleteLike = () => {
+        this._templateButton.classList.remove('cards__like-button_active');
+    }
+
+    addLike = () => {
+        this._templateButton.classList.add('cards__like-button_active');
+    }
 }
  
