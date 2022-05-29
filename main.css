@@ -9,7 +9,7 @@
 .cards__like-button_active{background-image:url(35948469632d0421d697.svg)}
 .cards__name-container{background:#fff;display:flex;justify-content:space-between;padding:25px 20px 30px}
 .cards__name{color:#000;font-family:Inter,Arial,Helvetica,sans-serif;font-size:24px;font-style:normal;font-weight:900;line-height:1.2;margin:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;width:190px}
-.cards__place-img{height:282px;width:100%}.cards__place-img:hover{cursor:pointer}
+.cards__place-img{height:282px;-o-object-fit:cover;object-fit:cover;width:100%}.cards__place-img:hover{cursor:pointer}
 .cards__place{border-radius:10px;display:grid;max-width:282px;overflow:hidden;position:relative}
 .footer{margin:auto;max-width:880px}
 .footer__copyright{color:#545454;font-family:Inter,Arial,Helvetica,sans-serif;font-size:18px;font-style:normal;font-weight:400;line-height:1.22;margin:67px 0 60px}@media (max-width:900px){.footer__copyright{margin-left:20px}}@media (max-width:320px){.footer__copyright{font-size:14px;line-height:1.21;margin:48px 0 36px 19px}}
