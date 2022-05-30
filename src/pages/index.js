@@ -14,10 +14,6 @@ const newApi = new Api(baseUrl, headers)
 
 let userId;
 
-console.log(headers)
-
-console.log(headers.authorization)
-
 newApi.getUserInfo('users/me')
 .then(data => {
     userId = data._id;
@@ -128,6 +124,9 @@ const newFullSizePopup = new PopupWithImage (popupFullSizeId);
 newFullSizePopup.setEventListeners();
 
 const newPopupWithFormEdit = new PopupWithForm(popupEditId, {submitForm: (inputList, close, renderLoading) => {
+
+    newFormValidatorEdit.addDisabledAttribute();
+
     newApi.patchNewInfo('users/me', 
     {
         name: inputList.name,
@@ -144,6 +143,7 @@ const newPopupWithFormEdit = new PopupWithForm(popupEditId, {submitForm: (inputL
         alert(err)
     })
     .finally(() => {
+        newFormValidatorEdit.removeDisabledAttribute;
         renderLoading(false);
     })
     
@@ -152,7 +152,10 @@ const newPopupWithFormEdit = new PopupWithForm(popupEditId, {submitForm: (inputL
 newPopupWithFormEdit.setEventListeners();
 
 
-const newPopupWithFormAdd = new PopupWithForm (popupAddId, {submitForm: (inputList, close, renderLoading) => {
+const newPopupWithFormAdd = new PopupWithForm (popupAddId,  {submitForm: (inputList, close, renderLoading) => {
+
+    newFormValidatorAdd.addDisabledAttribute();
+
     newApi.postNewCard('cards', 
     {
         name: inputList.place,
@@ -161,7 +164,6 @@ const newPopupWithFormAdd = new PopupWithForm (popupAddId, {submitForm: (inputLi
     .then(card => {
         const newCardExemplar = createCard(card, userId);
         newSection.addNewItem(newCardExemplar);
-        
     })
     .then(() => {
         close();
@@ -170,6 +172,7 @@ const newPopupWithFormAdd = new PopupWithForm (popupAddId, {submitForm: (inputLi
         alert(err)
     })
     .finally(() => {
+        newFormValidatorAdd.removeDisabledAttribute;
         renderLoading(false);
     })
 
@@ -177,7 +180,11 @@ const newPopupWithFormAdd = new PopupWithForm (popupAddId, {submitForm: (inputLi
 newPopupWithFormAdd.setEventListeners();
 
 const newPopupWithFormAvatar = new PopupWithForm (popupAvatarId, {
+
     submitForm: (inputList, close, renderLoading) => {
+
+        newFormValidatorAvatar.addDisabledAttribute();
+
         newApi.changeAvatar(`users/me/avatar`, 
         {
             avatar: inputList.link
@@ -193,6 +200,7 @@ const newPopupWithFormAvatar = new PopupWithForm (popupAvatarId, {
             alert(err)
         })
         .finally(() => {
+            newFormValidatorAvatar.removeDisabledAttribute();
             renderLoading(false);
         })
     }

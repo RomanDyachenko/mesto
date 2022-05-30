@@ -64,6 +64,15 @@ export class FormValidator {
         }
     }
 
+
+    addDisabledAttribute = () => {
+        this._buttonElement.setAttribute('disabled', 'disabled');
+    }
+
+    removeDisabledAttribute = () => {
+        this._buttonElement.removeAttribute('disabled');
+    }
+
     enableValidation = () => {
         this.toggleButtonState();
         this._setEventListeners();
