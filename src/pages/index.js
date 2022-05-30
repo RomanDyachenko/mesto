@@ -66,9 +66,10 @@ function createCard (item, dataId) {
     handleLikeClick: (isLike, checkLikesNumber, id, deleteLike, addLike) => {
         if (isLike(item)){
             newApi.deleteCardLike(`cards/${id}/likes`)
-            .then(() => {
+            .then((res) => {
                 deleteLike();
                 checkLikesNumber(res);
+                return res
             })
             .then(result => {
                 return item = result;
@@ -82,6 +83,7 @@ function createCard (item, dataId) {
         .then((res) => {
             addLike();
             checkLikesNumber(res);
+            return res
         })
         .then(result => {
             return item = result;
