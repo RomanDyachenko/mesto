@@ -13,11 +13,11 @@ export default class Section {
         this._containerElement.append(element);
     }
 
-    renderItems = (obj, data) => {
+    renderItems = (obj, dataId) => {
         
         obj.forEach(item => {
 
-        this._renderer(item, data);
+        this._renderer(item, dataId);
 
         })
     }

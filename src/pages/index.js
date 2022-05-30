@@ -12,19 +12,19 @@ import PopupWithSubmit from '../components/PopupWithSubmit';
 const newUserInfo = new UserInfo (objectUserInfo)
 const newApi = new Api()
 
-let userInfo;
+let userId;
 
 newApi.getUserInfo('https://nomoreparties.co/v1/cohort-41/users/me', {
     authorization: '75fdb49e-7217-4f03-ae58-c16a91160381'
 })
 .then(data => {
-    userInfo = data
+    userId = data._id
     newUserInfo.setUserInfo(data)
     newApi.getCardsInfo('https://mesto.nomoreparties.co/v1/cohort-41/cards', {
     authorization: '75fdb49e-7217-4f03-ae58-c16a91160381'
 })
 .then(items => {
-        newSection.renderItems(items, data);
+        newSection.renderItems(items, userId);
     })
 })
 .catch(err => {
@@ -37,6 +37,8 @@ newApi.getUserInfo('https://nomoreparties.co/v1/cohort-41/users/me', {
 const newPopupWithSubmit = new PopupWithSubmit(popupSubmitId, {
     submitForm: (removeCard, element, id, close) => {
         
+        console.log(this)
+
         newApi.deleteCard(`https://mesto.nomoreparties.co/v1/cohort-41/cards/${id}`, {
             authorization: '75fdb49e-7217-4f03-ae58-c16a91160381'
         })
@@ -56,8 +58,8 @@ newPopupWithSubmit.setEventListeners();
 
 
 
-function createCard (item, data) {
-    const newCard = new Card ( item, data._id, {openFullSizePopup: (cardImgSrc, cardImgTxt) => {
+function createCard (item, dataId) {
+    const newCard = new Card ( item, dataId, {openFullSizePopup: (cardImgSrc, cardImgTxt) => {
         newFullSizePopup.open(cardImgSrc, cardImgTxt);
     },
     handleDeleteIconClick: (removeCard, element, id) => {
@@ -107,9 +109,9 @@ function createCard (item, data) {
 
 
 
-const newSection = new Section ({renderer: (item, data) => {
+const newSection = new Section ({renderer: (item, dataId) => {
 
-    const newCardExemplar = createCard(item, data);
+    const newCardExemplar = createCard(item, dataId);
 
     newSection.addItems(newCardExemplar);
     
@@ -132,7 +134,7 @@ newFormValidatorAvatar.enableValidation();
 const newFullSizePopup = new PopupWithImage (popupFullSizeId);
 newFullSizePopup.setEventListeners();
 
-const newPopupWithFormEdit = new PopupWithForm(popupEditId, {submitForm: (inputList, renderLoading, close) => {
+const newPopupWithFormEdit = new PopupWithForm(popupEditId, {submitForm: (inputList, close) => {
     newApi.patchNewInfo('https://mesto.nomoreparties.co/v1/cohort-41/users/me', {
         authorization: '75fdb49e-7217-4f03-ae58-c16a91160381',
         'Content-Type': 'application/json'
@@ -145,12 +147,11 @@ const newPopupWithFormEdit = new PopupWithForm(popupEditId, {submitForm: (inputL
     .then(obj => {
         newUserInfo.setUserInfo(obj);
     })
-    .then(() => {
-        renderLoading(false);
-        close();
-    })
     .catch(err => {
         alert(err)
+    })
+    .finally(() => {
+        close();
     })
     
     
@@ -158,7 +159,7 @@ const newPopupWithFormEdit = new PopupWithForm(popupEditId, {submitForm: (inputL
 newPopupWithFormEdit.setEventListeners();
 
 
-const newPopupWithFormAdd = new PopupWithForm (popupAddId, {submitForm: (inputList, renderLoading, close) => {
+const newPopupWithFormAdd = new PopupWithForm (popupAddId, {submitForm: (inputList, close) => {
     newApi.postNewCard('https://mesto.nomoreparties.co/v1/cohort-41/cards', {
         authorization: '75fdb49e-7217-4f03-ae58-c16a91160381',
         'Content-Type': 'application/json'
@@ -168,24 +169,22 @@ const newPopupWithFormAdd = new PopupWithForm (popupAddId, {submitForm: (inputLi
         link: inputList.url
     })
     .then(card => {
-        console.log(userId)
-        const newCardExemplar = createCard(card, userInfo);
+        const newCardExemplar = createCard(card, userId);
         newSection.addNewItem(newCardExemplar);
         
     })
-    .then(() => {
-        renderLoading(false);
-        close();
-    })
     .catch(err => {
         alert (err)
+    })
+    .finally(() => {
+        close();
     })
 
 }})
 newPopupWithFormAdd.setEventListeners();
 
 const newPopupWithFormAvatar = new PopupWithForm (popupAvatarId, {
-    submitForm: (inputList, renderLoading, close) => {
+    submitForm: (inputList, close) => {
         newApi.changeAvatar(`https://mesto.nomoreparties.co/v1/cohort-41/users/me/avatar`, {
             authorization: '75fdb49e-7217-4f03-ae58-c16a91160381',
             'Content-Type': 'application/json'
@@ -194,17 +193,15 @@ const newPopupWithFormAvatar = new PopupWithForm (popupAvatarId, {
             avatar: inputList.link
         })
         .then(result => {
-            console.log(result)
             profileAvatar.src = result.avatar;
             profileAvatar.alt = `${result.name} ${result.about}`
             
         })
-        .then(() => {
-            renderLoading(false);
-            close();
-        })
         .catch(err => {
             alert (err)
+        })
+        .finally(() => {
+            close();
         })
     }
 })

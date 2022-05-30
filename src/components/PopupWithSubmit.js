@@ -10,26 +10,25 @@ export default class PopupWithSubmit extends Popup{
 
         this._submitForm = submitForm; 
 
-        this._popupForm = this._popupElement.querySelector('.popup__form'); 
+        this._popupForm = this._popupElement.querySelector('.popup__form');
 
     } 
 
 
-    open (removeCard, element, id) {
+    open = (removeCard, element, id) => {
         super.open();
-        
-        this._popupForm.addEventListener('submit', (evt) => {
-            evt.preventDefault()
-            this._handleSubmitListener(removeCard, element, id);
-        }, {once: true});
+        this._element = element;
+        this._id = id;
+        this._removeCard = removeCard;
     }
-
-
-    _handleSubmitListener = (removeCard, element, id) => { 
-
-        this._submitForm(removeCard, element, id, this.close); 
- 
-
-    } 
+    
+    setEventListeners = () => {
+        super.setEventListeners();
+        this._popupForm.addEventListener('submit', (evt) => {
+            evt.preventDefault();
+            this._submitForm(this._removeCard, this._element, this._id, this.close);
+        });
+    }
+    
 
 }
