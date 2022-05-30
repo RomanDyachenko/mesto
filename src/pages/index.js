@@ -4,28 +4,31 @@ import { FormValidator } from "../components/FormValidator.js";
 import PopupWithImage from '../components/PopupWithImage.js';
 import PopupWithForm from "../components/PopupWithForm.js";
 import UserInfo from "../components/UserInfo.js";
-import {profileAvatar, profileAvatarButton, popupAvatarId, popupAvatar, popupSubmitId ,templateContainer, cardsSelector, objectValidation, initialCards, profileEditButton, popupEdit, popupEditName, popupEditEmployment, popupAdd, profileAddButton, popupAddId, popupEditId, objectUserInfo, popupFullSizeId} from "../utils.js";
+import { profileAvatar, profileAvatarButton, popupAvatarId, popupAvatar, popupSubmitId ,templateContainer, cardsSelector, objectValidation, initialCards, profileEditButton, popupEdit, popupEditName, popupEditEmployment, popupAdd, profileAddButton, popupAddId, popupEditId, objectUserInfo, popupFullSizeId, baseUrl, headers} from "../utils.js";
 import Section from "../components/Section.js";
 import Api from '../components/Api';
 import PopupWithSubmit from '../components/PopupWithSubmit';
 
 const newUserInfo = new UserInfo (objectUserInfo)
-const newApi = new Api()
+const newApi = new Api(baseUrl, headers)
 
 let userId;
 
-newApi.getUserInfo('https://nomoreparties.co/v1/cohort-41/users/me', {
-    authorization: '75fdb49e-7217-4f03-ae58-c16a91160381'
-})
+console.log(headers)
+
+console.log(headers.authorization)
+
+newApi.getUserInfo('users/me')
 .then(data => {
-    userId = data._id
-    newUserInfo.setUserInfo(data)
-    newApi.getCardsInfo('https://mesto.nomoreparties.co/v1/cohort-41/cards', {
-    authorization: '75fdb49e-7217-4f03-ae58-c16a91160381'
-})
-.then(items => {
+    userId = data._id;
+
+    newUserInfo.setUserInfo(data);
+
+    newApi.getCardsInfo('cards')
+    .then(items => {
         newSection.renderItems(items, userId);
     })
+
 })
 .catch(err => {
     alert(err);
@@ -36,12 +39,7 @@ newApi.getUserInfo('https://nomoreparties.co/v1/cohort-41/users/me', {
 
 const newPopupWithSubmit = new PopupWithSubmit(popupSubmitId, {
     submitForm: (removeCard, element, id, close) => {
-        
-        console.log(this)
-
-        newApi.deleteCard(`https://mesto.nomoreparties.co/v1/cohort-41/cards/${id}`, {
-            authorization: '75fdb49e-7217-4f03-ae58-c16a91160381'
-        })
+        newApi.deleteCard(`cards/${id}`)
         .then(() => {
             removeCard(element);
         })
@@ -67,14 +65,10 @@ function createCard (item, dataId) {
     },
     handleLikeClick: (isLike, checkLikesNumber, id, deleteLike, addLike) => {
         if (isLike(item)){
-            newApi.deleteCardLike(`https://mesto.nomoreparties.co/v1/cohort-41/cards/${id}/likes`, {
-                authorization: '75fdb49e-7217-4f03-ae58-c16a91160381'
-            }
-            )
-            .then((res) => {
+            newApi.deleteCardLike(`cards/${id}/likes`)
+            .then(() => {
                 deleteLike();
                 checkLikesNumber(res);
-                return res;
             })
             .then(result => {
                 return item = result;
@@ -84,13 +78,10 @@ function createCard (item, dataId) {
             })
             
         }
-        else newApi.putCardLike(`https://mesto.nomoreparties.co/v1/cohort-41/cards/${id}/likes`, {
-            authorization: '75fdb49e-7217-4f03-ae58-c16a91160381'
-        })
+        else newApi.putCardLike(`cards/${id}/likes`)
         .then((res) => {
             addLike();
             checkLikesNumber(res);
-            return res
         })
         .then(result => {
             return item = result;
@@ -134,11 +125,8 @@ newFormValidatorAvatar.enableValidation();
 const newFullSizePopup = new PopupWithImage (popupFullSizeId);
 newFullSizePopup.setEventListeners();
 
-const newPopupWithFormEdit = new PopupWithForm(popupEditId, {submitForm: (inputList, close) => {
-    newApi.patchNewInfo('https://mesto.nomoreparties.co/v1/cohort-41/users/me', {
-        authorization: '75fdb49e-7217-4f03-ae58-c16a91160381',
-        'Content-Type': 'application/json'
-    },
+const newPopupWithFormEdit = new PopupWithForm(popupEditId, {submitForm: (inputList, close, renderLoading) => {
+    newApi.patchNewInfo('users/me', 
     {
         name: inputList.name,
         about: inputList.employment
@@ -147,11 +135,14 @@ const newPopupWithFormEdit = new PopupWithForm(popupEditId, {submitForm: (inputL
     .then(obj => {
         newUserInfo.setUserInfo(obj);
     })
+    .then(() => {
+        close();
+    })
     .catch(err => {
         alert(err)
     })
     .finally(() => {
-        close();
+        renderLoading(false);
     })
     
     
@@ -159,11 +150,8 @@ const newPopupWithFormEdit = new PopupWithForm(popupEditId, {submitForm: (inputL
 newPopupWithFormEdit.setEventListeners();
 
 
-const newPopupWithFormAdd = new PopupWithForm (popupAddId, {submitForm: (inputList, close) => {
-    newApi.postNewCard('https://mesto.nomoreparties.co/v1/cohort-41/cards', {
-        authorization: '75fdb49e-7217-4f03-ae58-c16a91160381',
-        'Content-Type': 'application/json'
-    },
+const newPopupWithFormAdd = new PopupWithForm (popupAddId, {submitForm: (inputList, close, renderLoading) => {
+    newApi.postNewCard('cards', 
     {
         name: inputList.place,
         link: inputList.url
@@ -173,35 +161,37 @@ const newPopupWithFormAdd = new PopupWithForm (popupAddId, {submitForm: (inputLi
         newSection.addNewItem(newCardExemplar);
         
     })
+    .then(() => {
+        close();
+    })
     .catch(err => {
-        alert (err)
+        alert(err)
     })
     .finally(() => {
-        close();
+        renderLoading(false);
     })
 
 }})
 newPopupWithFormAdd.setEventListeners();
 
 const newPopupWithFormAvatar = new PopupWithForm (popupAvatarId, {
-    submitForm: (inputList, close) => {
-        newApi.changeAvatar(`https://mesto.nomoreparties.co/v1/cohort-41/users/me/avatar`, {
-            authorization: '75fdb49e-7217-4f03-ae58-c16a91160381',
-            'Content-Type': 'application/json'
-        },
+    submitForm: (inputList, close, renderLoading) => {
+        newApi.changeAvatar(`users/me/avatar`, 
         {
             avatar: inputList.link
         })
         .then(result => {
             profileAvatar.src = result.avatar;
             profileAvatar.alt = `${result.name} ${result.about}`
-            
+        })
+        .then(() => {
+            close();
         })
         .catch(err => {
-            alert (err)
+            alert(err)
         })
         .finally(() => {
-            close();
+            renderLoading(false);
         })
     }
 })

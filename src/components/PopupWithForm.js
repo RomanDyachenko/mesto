@@ -19,10 +19,10 @@ export default class PopupWithForm extends Popup{
         return this._formValues;
     }
     _handleSubmitListener = (evt) => {
-        this._renderLoading(true);
+        this.renderLoading(true);
         evt.preventDefault();
         this._values = this._getInputValues();
-        this._submitForm(this._values, this.close);
+        this._submitForm(this._values, this.close, this.renderLoading);
     }
 
     setEventListeners () { 
@@ -32,13 +32,11 @@ export default class PopupWithForm extends Popup{
      }
 
      close () {
-        
-         this._renderLoading(false)
          super.close();
          this._popupForm.reset();
      }
 
-     _renderLoading = (isLoading) => {
+     renderLoading = (isLoading) => {
         if(isLoading){
            return this._popupButtonSubmit.textContent = 'Сохранение...';
         }

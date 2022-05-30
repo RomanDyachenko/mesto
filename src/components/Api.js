@@ -1,4 +1,9 @@
 export default class Api {
+    constructor(baseUrl, headers){
+        this._baseUrl = baseUrl;
+        this._headers = headers;
+        this._authorization = this._headers.authorization;
+    }
 
 _returnResult = (res) => {
     if (res.ok){
@@ -8,30 +13,35 @@ _returnResult = (res) => {
     return Promise.reject("Something gone wrong");
 }
 
-getCardsInfo = (url, headers) => {
-    return fetch(url, {
+getCardsInfo = (url) => {
+    return fetch(`${this._baseUrl}${url}`, {
         method: "GET",
-        headers: headers
+        headers: {
+            authorization: this._authorization
+        }
+
     })
     .then ((res) => {
        return this._returnResult(res)
     })
 }
 
-getUserInfo = (url, headers) => {
-    return fetch(url, {
+getUserInfo = (url) => {
+    return fetch(`${this._baseUrl}${url}`, {
         method: "GET",
-        headers: headers
+        headers: {
+            authorization: this._authorization
+        }
     })
     .then ((res) => {
        return this._returnResult(res)
     })
 }
 
-patchNewInfo = (url, headers, body) => {
-    return fetch (url, {
+patchNewInfo = (url, body) => {
+    return fetch (`${this._baseUrl}${url}`, {
         method: "PATCH",
-        headers: headers,
+        headers: this._headers,
         body: JSON.stringify(
             body
         )})
@@ -40,10 +50,10 @@ patchNewInfo = (url, headers, body) => {
          })
 
 }
-postNewCard = (url, headers, body) => {
-    return fetch (url, {
+postNewCard = (url, body) => {
+    return fetch (`${this._baseUrl}${url}`, {
         method: "POST",
-        headers: headers,
+        headers: this._headers,
         body: JSON.stringify(
             body
         )
@@ -53,40 +63,46 @@ postNewCard = (url, headers, body) => {
      })
 }
 
-deleteCard = (url, headers) => {
-    return fetch(url, {
+deleteCard = (url) => {
+    return fetch(`${this._baseUrl}${url}`, {
         method: 'DELETE',
-        headers: headers
+        headers: {
+            authorization: this._authorization
+        }
     })
     .then ((res) => {
         return this._returnResult(res)
      })
 }
 
-putCardLike = (url, headers) => {
-    return fetch(url, {
+putCardLike = (url) => {
+    return fetch(`${this._baseUrl}${url}`, {
         method: 'PUT',
-        headers: headers
+        headers: {
+            authorization: this._authorization
+        }
     })
     .then ((res) => {
         return this._returnResult(res)
      })
 }
 
-deleteCardLike = (url, headers) => {
-    return fetch(url, {
+deleteCardLike = (url) => {
+    return fetch(`${this._baseUrl}${url}`, {
         method: 'DELETE',
-        headers: headers
+        headers: {
+            authorization: this._authorization
+        }
     })
     .then ((res) => {
         return this._returnResult(res)
      })
 }
 
-changeAvatar = (url, headers, body) => {
-    return fetch(url, {
+changeAvatar = (url, body) => {
+    return fetch(`${this._baseUrl}${url}`, {
         method: 'PATCH',
-        headers: headers,
+        headers: this._headers,
         body: JSON.stringify(
             body
         )
