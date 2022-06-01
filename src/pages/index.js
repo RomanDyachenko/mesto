@@ -9,28 +9,28 @@ import Section from "../components/Section.js";
 import Api from '../components/Api';
 import PopupWithSubmit from '../components/PopupWithSubmit';
 
+
 const newUserInfo = new UserInfo (objectUserInfo)
 const newApi = new Api(baseUrl, headers)
 
 let userId;
 
-newApi.getUserInfo('users/me')
-.then(data => {
+
+Promise.all([newApi.getUserInfo('users/me'), newApi.getCardsInfo('cards')])
+.then((res) => {
+    const data = res[0];
+    const items = res[1];
+
     userId = data._id;
 
     newUserInfo.setUserInfo(data);
 
-    newApi.getCardsInfo('cards')
-    .then(items => {
-        newSection.renderItems(items, userId);
-    })
+    newSection.renderItems(items, userId);
 
 })
 .catch(err => {
     alert(err);
 })
-
-
 
 
 const newPopupWithSubmit = new PopupWithSubmit(popupSubmitId, {
